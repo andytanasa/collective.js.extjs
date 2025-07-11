@@ -1,0 +1,41 @@
+# -----------------------------------------
+# Core Node & JavaScript Build Artifacts
+# -----------------------------------------
+node_modules/
+dist/
+build/
+temp/
+.cache/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+.idea
+a11y-reports
+.env
+
+# Webpack-related
+webpack-stats.json
+.stats/
+*.local.js
+
+# -----------------------------------------
+# ExtJS specific (custom builds or SDK)
+# -----------------------------------------
+*.jsb2
+ext-all.js
+ext-all-debug.js
+ext-core.js
+ext-core-debug.js
+*.tmp.js
+*.min.js.map
+examples/**/build/
+examples/**/ext-*
+
+ext-all-debug.js
+ext-all.js
+
+# -----------------------------------------
+# Axe-core / Accessibility Test Outputs

@@ -1,0 +1,30 @@
+{
+  "name": "extjs-3.4",
+  "version": "1.0.0",
+  "main": "ext-all-debug-w-comments.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "gulp",
+    "axe": "ts-node ./test/a11y/run-a11y.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.0.7",
+    "axe-core": "^4.10.3",
+    "axe-html-reporter": "^2.2.11",
+    "glob": "^11.0.3",
+    "gulp": "^5.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-terser": "^2.1.0",
+    "playwright": "^1.53.1",
+    "ts-node": "^10.9.2"
+  }
+}
