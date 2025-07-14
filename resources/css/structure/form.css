@@ -10,7 +10,7 @@
 }
 
 .ext-webkit *:focus{
-    outline: none !important;
+    /* outline: none !important; */
 }
 
 /* ---- text fields ---- */

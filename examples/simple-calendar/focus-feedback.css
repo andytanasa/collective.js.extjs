@@ -1,0 +1,20 @@
+/* Focus feedback for accessibility testing */
+:focus {
+  outline: 3px solid #ff9800 !important;
+  background: #fff3e0 !important;
+  transition: outline 0.1s, background 0.1s;
+}
+
+/* Extra highlight for calendar buttons and cells */
+.x-date-picker .x-date-inner td a:focus,
+.x-date-picker .x-date-left a:focus,
+.x-date-picker .x-date-right a:focus,
+.x-date-picker .x-date-mp-btns button:focus,
+.x-date-picker .x-date-mp-btns a:focus,
+.x-date-picker .x-date-mp-btns .x-date-mp-ok:focus,
+.x-date-picker .x-date-mp-btns .x-date-mp-cancel:focus,
+.x-date-picker .x-date-mp-btns button[tabindex="0"]:focus {
+  outline: 3px solid #ff9800 !important;
+  background: #fff3e0 !important;
+  box-shadow: 0 0 0 4px #ffe0b2;
+} 

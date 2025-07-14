@@ -858,7 +858,7 @@ ul.x-tab-strip li.x-tab-edge {
 }
 
 .ext-webkit *:focus{
-    outline: none !important;
+    /* outline: none !important; */
 }
 
 /* ---- text fields ---- */

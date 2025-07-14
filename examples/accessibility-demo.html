@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ext JS 3.4.0 - Accessibility Overrides Example</title>
+
+    <!-- Ext JS Core Files -->
+    <link rel="stylesheet" href="../resources/css/ext-all.css">
+    <script src="../adapter/ext/ext-base.js"></script>
+    <script src="../ext-all-debug.js"></script>
+
+    <!-- Accessibility Override Files -->
+    <script src="../overrides/ButtonOverride.js"></script>
+    <script src="../overrides/CheckboxOverride.js"></script>
+    <script src="../overrides/ComboBoxOverride.js"></script>
+    <script src="../overrides/DatePickerOverride.js"></script>
+    <script src="../overrides/FormPanelOverride.js"></script>
+    <script src="../overrides/RadioOverride.js"></script>
+    <script src="../overrides/TabPanelOverride.js"></script>
+    <script src="../overrides/TextAreaOverride.js"></script>
+    <script src="../overrides/TextFieldOverride.js"></script>
+
+    <style>
+        body {
+            font-family: arial, sans-serif;
+            padding: 20px;
+        }
+
+        .example-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .example-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .info-box {
+            background: #e6f3ff;
+            border: 1px solid #b3d9ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ext JS 3.4.0 Accessibility Overrides</h1>
+
+    <div class="info-box">
+        <h2>Accessibility Features Included</h2>
+        <p>This example demonstrates comprehensive WCAG AA accessibility enhancements for Ext JS 3.4.0 components:</p>
+        <ul>
+            <li><strong>ButtonOverride.js</strong> - Button accessibility with ARIA attributes and keyboard navigation
+            </li>
+            <li><strong>CheckboxOverride.js</strong> - Checkbox accessibility with state announcements</li>
+            <li><strong>ComboBoxOverride.js</strong> - ComboBox accessibility with dropdown navigation</li>
+            <li><strong>DatePickerOverride.js</strong> - Calendar accessibility with grid navigation</li>
+            <li><strong>FormPanelOverride.js</strong> - Form panel accessibility with validation announcements</li>
+            <li><strong>RadioOverride.js</strong> - Radio button accessibility with group navigation</li>
+            <li><strong>TabPanelOverride.js</strong> - Tab panel accessibility with ARIA tablist</li>
+            <li><strong>TextAreaOverride.js</strong> - Text area accessibility with character counting</li>
+            <li><strong>TextFieldOverride.js</strong> - Text field accessibility with validation support</li>
+        </ul>
+    </div>
+
+    <div class="example-section">
+        <h3>Comprehensive Form Example</h3>
+        <div id="accessibility-form"></div>
+    </div>
+
+    <div class="example-section">
+        <h3>Tab Panel Example</h3>
+        <div id="accessibility-tabs"></div>
+    </div>
+
+    <div class="example-section">
+        <h3>Button Examples</h3>
+        <div id="accessibility-buttons"></div>
+    </div>
+
+    <script>
+        Ext.onReady(function () {
+
+            // Comprehensive Form Example
+            var accessibilityForm = new Ext.form.FormPanel({
+                renderTo: 'accessibility-form',
+                title: 'Accessible Contact Form',
+                width: 500,
+                padding: 20,
+                formInstructions: 'Please fill out all required fields in this contact form. Use Tab to navigate between fields.',
+
+                items: [{
+                    xtype: 'textfield',
+                    fieldLabel: 'First Name',
+                    name: 'firstName',
+                    allowBlank: false,
+                    helpText: 'Enter your first name as it appears on official documents'
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: 'Last Name',
+                    name: 'lastName',
+                    allowBlank: false
+                }, {
+                    xtype: 'textfield',
+                    fieldLabel: 'Email',
+                    name: 'email',
+                    inputType: 'email',
+                    allowBlank: false,
+                    vtype: 'email'
+                }, {
+                    xtype: 'textarea',
+                    fieldLabel: 'Message',
+                    name: 'message',
+                    height: 100,
+                    maxLength: 500,
+                    allowBlank: false,
+                    helpText: 'Describe your inquiry or feedback'
+                }, {
+                    xtype: 'combo',
+                    fieldLabel: 'Department',
+                    name: 'department',
+                    store: new Ext.data.SimpleStore({
+                        fields: ['value', 'text'],
+                        data: [
+                            ['sales', 'Sales'],
+                            ['support', 'Support'],
+                            ['billing', 'Billing'],
+                            ['general', 'General Inquiry']
+                        ]
+                    }),
+                    displayField: 'text',
+                    valueField: 'value',
+                    mode: 'local',
+                    allowBlank: false
+                }, {
+                    xtype: 'datefield',
+                    fieldLabel: 'Preferred Contact Date',
+                    name: 'contactDate',
+                    format: 'm/d/Y'
+                }, {
+                    xtype: 'radiogroup',
+                    fieldLabel: 'Contact Method',
+                    name: 'contactMethod',
+                    items: [
+                        { boxLabel: 'Email', name: 'contactMethod', inputValue: 'email' },
+                        { boxLabel: 'Phone', name: 'contactMethod', inputValue: 'phone' },
+                        { boxLabel: 'Mail', name: 'contactMethod', inputValue: 'mail' }
+                    ]
+                }, {
+                    xtype: 'checkbox',
+                    fieldLabel: 'Newsletter',
+                    boxLabel: 'Subscribe to our newsletter',
+                    name: 'newsletter'
+                }],
+
+                buttons: [{
+                    text: 'Submit',
+                    formBind: true,
+                    handler: function () {
+                        alert('Form submitted! (This is just a demo)');
+                    }
+                }, {
+                    text: 'Reset',
+                    handler: function () {
+                        accessibilityForm.getForm().reset();
+                    }
+                }]
+            });
+
+            // Tab Panel Example
+            var accessibilityTabs = new Ext.TabPanel({
+                renderTo: 'accessibility-tabs',
+                width: 500,
+                height: 300,
+                activeTab: 0,
+
+                items: [{
+                    title: 'Personal Info',
+                    html: '<p>This tab contains personal information fields.</p><p>Use arrow keys to navigate between tabs.</p>'
+                }, {
+                    title: 'Contact Details',
+                    html: '<p>This tab contains contact information.</p><p>Press Enter or Space to activate a focused tab.</p>'
+                }, {
+                    title: 'Preferences',
+                    closable: true,
+                    html: '<p>This tab contains user preferences.</p><p>This tab can be closed using the close button.</p>'
+                }]
+            });
+
+            // Button Examples
+            var buttonPanel = new Ext.Panel({
+                renderTo: 'accessibility-buttons',
+                title: 'Accessible Buttons',
+                width: 500,
+                padding: 20,
+
+                items: [{
+                    xtype: 'button',
+                    text: 'Primary Action',
+                    cls: 'x-btn-primary',
+                    scale: 'large',
+                    handler: function () {
+                        alert('Primary action clicked!');
+                    }
+                }, {
+                    xtype: 'button',
+                    text: 'Secondary Action',
+                    style: 'margin-left: 10px;',
+                    handler: function () {
+                        alert('Secondary action clicked!');
+                    }
+                }, {
+                    xtype: 'button',
+                    text: 'Disabled Button',
+                    disabled: true,
+                    style: 'margin-left: 10px;'
+                }]
+            });
+        });
+    </script>
+</body>
+
+</html>

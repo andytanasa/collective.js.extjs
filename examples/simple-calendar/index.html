@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Ext JS Calendar Example</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="focus-feedback.css" />
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext-all.js"></script>
+    <script type="text/javascript" src="../../overrides/DatePickerOverride.js"></script>
+</head>
+<body>
+    <div id="calendar-ct" style="margin:40px;"></div>
+    <script type="text/javascript">
+        Ext.onReady(function() {
+            new Ext.DatePicker({
+                renderTo: 'calendar-ct'
+            });
+        });
+    </script>
+</body>
+</html> 

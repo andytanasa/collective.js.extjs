@@ -170,6 +170,10 @@ ButtonPanel = Ext.extend(Ext.Panel, {
             b.enableToggle = this.enableToggle;
             b.split = this.split;
             b.arrowAlign = this.arrowAlign;
+            // Add click handler to console log a message
+            b.handler = function() {
+                console.log('Button clicked: ' + (this.text || 'Button with icon only'));
+            };
         }
         var items = [{
             xtype: 'box',
