@@ -311,19 +311,26 @@ Ext.onReady(function() {
         onIframeKeyDown: function(e) {
             // Handle special keys in iframe content
             var key = e.getKey();
+            var self = this;
             
             // Announce formatting changes for screen readers
             if (this.accessibilityConfig.announceFormatting && this.accessibilityConfig.screenReaderSupport) {
                 if (e.ctrlKey) {
                     switch (key) {
                         case e.B:
-                            setTimeout(() => this.announceFormattingChange('Bold formatting applied'), 100);
+                            setTimeout(function() { 
+                                self.announceFormattingChange('Bold formatting applied'); 
+                            }, 100);
                             break;
                         case e.I:
-                            setTimeout(() => this.announceFormattingChange('Italic formatting applied'), 100);
+                            setTimeout(function() { 
+                                self.announceFormattingChange('Italic formatting applied'); 
+                            }, 100);
                             break;
                         case e.U:
-                            setTimeout(() => this.announceFormattingChange('Underline formatting applied'), 100);
+                            setTimeout(function() { 
+                                self.announceFormattingChange('Underline formatting applied'); 
+                            }, 100);
                             break;
                     }
                 }
@@ -357,16 +364,17 @@ Ext.onReady(function() {
             
             var mode = sourceEdit ? 'source code editing' : 'visual editing';
             var announcement = 'Switched to ' + mode + ' mode';
+            var self = this;
             
             this.announceToScreenReader(announcement, 'assertive');
             
             // Update iframe accessibility based on mode
             if (this.initialized) {
-                setTimeout(() => {
+                setTimeout(function() {
                     if (sourceEdit) {
                         // In source mode, ensure textarea is accessible
-                        if (this.el && this.el.dom.tagName.toLowerCase() === 'textarea') {
-                            this.el.set({
+                        if (self.el && self.el.dom.tagName.toLowerCase() === 'textarea') {
+                            self.el.set({
                                 'aria-label': 'HTML source code editor',
                                 'role': 'textbox',
                                 'aria-multiline': 'true'
@@ -374,7 +382,7 @@ Ext.onReady(function() {
                         }
                     } else {
                         // In WYSIWYG mode, ensure iframe is accessible
-                        this.setupIframeAccessibility();
+                        self.setupIframeAccessibility();
                     }
                 }, 100);
             }
@@ -518,6 +526,35 @@ Ext.onReady(function() {
             Ext.form.HtmlEditor.superclass.beforeDestroy.apply(this, arguments);
         }
     });
+    
+    // ====================================
+    // Use createSequence for method interception
+    // ====================================
+    
+    // Use createSequence if available (Ext JS 3.0+), otherwise fall back to override pattern
+    if (Function.prototype.createSequence) {
+        // Enhanced onRender with accessibility setup
+        Ext.form.HtmlEditor.prototype.onRender = Ext.form.HtmlEditor.prototype.onRender.createSequence(function(ct, position) {
+            if (this.accessibilityConfig && this.rendered) {
+                this.setupHtmlEditorAccessibility();
+            }
+        });
+        
+        // Enhanced toggleSourceEdit with accessibility announcements
+        if (Ext.form.HtmlEditor.prototype.toggleSourceEdit) {
+            Ext.form.HtmlEditor.prototype.toggleSourceEdit = Ext.form.HtmlEditor.prototype.toggleSourceEdit.createSequence(function(sourceEditMode) {
+                this.onEditModeChange(this, sourceEditMode);
+            });
+        }
+        
+        // Enhanced syncValue with accessibility updates
+        if (Ext.form.HtmlEditor.prototype.syncValue) {
+            Ext.form.HtmlEditor.prototype.syncValue = Ext.form.HtmlEditor.prototype.syncValue.createSequence(function() {
+                var html = this.getValue();
+                this.onContentSync(this, html);
+            });
+        }
+    }
     
     // ====================================
     // Hidden Accessibility Helper Styles
